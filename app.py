@@ -12,7 +12,7 @@ import streamlit as st
 st.title("文件转换应用")
 
 # 上传文件
-uploaded_file = st.file_uploader("请选择要上传的文件：", type=["txt"])
+uploaded_file = st.file_uploader("请选择要上传的文件：", type=["txt",'pdf'])
 
 # 如果有文件上传
 if uploaded_file is not None:
