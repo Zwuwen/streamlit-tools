@@ -48,13 +48,11 @@ if uploaded_file is not None:
 
     if selected_transformation == "FREE-CMD-FORMAT":
         df = pd.read_csv(StringIO(processed_text.decode('utf-8')),sep='\s+').reset_index(drop=True)/1024
-        # st.dataframe(df)
+        df['used-buffer'] = df['used'] - df['buffers']
+        df['free+cached'] = df['free'] + df['cached']
+
         fig = px.line(df,title='memory usage',labels={'index':'time(min)','value':'memory usage(MB)'})
         st.plotly_chart(fig)
-
-    # 显示操作后的文件内容
-    # st.write("处理后的文件内容：")
-    # st.write(processed_text)
 
     # 提供下载操作后的文件
     st.download_button(
