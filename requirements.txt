@@ -1,5 +1,3 @@
 more_itertools
-#plotly~=5.14.1
-#streamlit~=1.21.0
 pandas~=1.5.2
 toolz~=0.12.0
