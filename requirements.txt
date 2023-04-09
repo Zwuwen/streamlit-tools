@@ -1,2 +1,5 @@
 more_itertools
-plotly
+plotly~=5.14.1
+streamlit~=1.15.1
+pandas~=1.5.2
+toolz~=0.12.0

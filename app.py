@@ -7,46 +7,52 @@
 # @Software: streamlitTools
 from io import StringIO
 from collections import defaultdict
+from toolz.curried import do
 
 import streamlit as st
-from more_itertools import first_true
+from more_itertools import first_true, consume
 import pandas as pd
 import plotly.express as px
 
 # 设置宽屏
 st.set_page_config(layout="wide")
 
-# # 设置页面标题
-# st.title("Memory show")
-
 FREE_CMD = 'watch -n 60 free'
 SYSTEM_CMD = './system_status.sh'
 
 # 定义转换函数
 def transform_text(text, transformation):
-    if transformation == FREE_CMD:
-        text_list = text.splitlines()
-        columns = first_true(text_list, pred=lambda x: 'total' in x.decode('utf-8')).decode('utf-8')+'\n'
-        filter_content = [text.decode('utf-8').replace('Mem:','mem ') for text in text_list if 'Mem:' in text.decode('utf-8')]
-        result = (columns + '\n'.join(filter_content)).encode('utf-8')
+    def _transform_free(txt):
+        text_list = txt.decode('utf-8').splitlines()
 
-        df = pd.read_csv(StringIO(result.decode('utf-8')), sep='\s+').reset_index(drop=True) / 1024
+        columns = first_true(text_list, pred=lambda x: 'total' in x) + '\n'
+        format_str = columns + '\n'.join(t.replace('Mem:', 'mem ') for t in text_list if 'Mem:' in t)
+
+        df = pd.read_csv(StringIO(format_str), sep='\s+').reset_index(drop=True) / 1024
         df['used-buffer'] = df['used'] - df['buffers']
         df['free+cached'] = df['free'] + df['cached']
 
         fig = px.line(df, title='memory usage', labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
         st.plotly_chart(fig)
+    def _transform_system(txt):
+        text_list =txt.decode('utf-8').splitlines()
+
+        keys = ('VmHWM', 'VmRSS')
+        get_digit = lambda x: x.split(':')[1].split('MB')[0].strip()
+        mem_map = defaultdict(list)
+
+        consume(do(lambda x: mem_map[key].append(x))(get_digit(t)) for t in text_list for key in keys if key in t)
+        if mem_map:
+            df = pd.DataFrame(mem_map)
+            fig = px.line(df, title='memory usage', labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
+            st.plotly_chart(fig)
+        else:
+            st.error('file format error')
+
+    if transformation == FREE_CMD:
+        _transform_free(text)
     elif transformation == SYSTEM_CMD:
-        memory_map = defaultdict(list)
-        for text in text.splitlines():
-            text_str = text.decode('utf-8')
-            for key in ['VmHWM', 'VmRSS']:
-                if key in text_str:
-                    digit = text_str.split(':')[1].split('MB')[0].strip()
-                    memory_map[key].append(digit)
-        df = pd.DataFrame(memory_map)
-        fig = px.line(df, title='memory usage', labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
-        st.plotly_chart(fig)
+        _transform_system(text)
 
 def show(uploader_key,radio_key):
     # 上传文件
@@ -63,6 +69,7 @@ def show(uploader_key,radio_key):
             transform_text(file_contents, selected_transformation)
         except Exception as e:
             st.error(e)
+            raise
 
 left_column, _, right_column= st.columns([1,0.15,1])
 with left_column:
