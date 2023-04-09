@@ -69,7 +69,6 @@ def show(uploader_key,radio_key):
             transform_text(file_contents, selected_transformation)
         except Exception as e:
             st.error(e)
-            raise
 
 left_column, _, right_column= st.columns([1,0.15,1])
 with left_column:
