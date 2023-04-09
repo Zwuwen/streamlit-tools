@@ -32,7 +32,7 @@ def transform_text(text, transformation):
         df['used-buffer'] = df['used'] - df['buffers']
         df['free+cached'] = df['free'] + df['cached']
 
-        fig = px.line(df, title='memory usage', labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
+        fig = px.line(df, labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
         st.plotly_chart(fig)
     def _transform_system(txt):
         text_list =txt.decode('utf-8').splitlines()
@@ -44,7 +44,7 @@ def transform_text(text, transformation):
         consume(do(lambda x: mem_map[key].append(x))(get_digit(t)) for t in text_list for key in keys if key in t)
         if mem_map:
             df = pd.DataFrame(mem_map)
-            fig = px.line(df, title='memory usage', labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
+            fig = px.line(df, labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
             st.plotly_chart(fig)
         else:
             st.error('file format error')
