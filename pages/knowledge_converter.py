@@ -14,8 +14,8 @@ def create_property_info_node(root, row):
     property_info = root.createElement('propertyInfo')
     node_names = ['device', 'property', 'operator', 'value']
     for node_name in node_names:
-        node = root.createElement(node_name)
-        node.appendChild(create_node(node_name,row.loc[node_name]))
+        # node = root.createElement(node_name)
+        node = create_node(node_name,row.loc[node_name])
         property_info.appendChild(node)
 
     return property_info
