@@ -24,9 +24,9 @@ def create_event_type_eng_node(root, row):
     def create_classify_info_node():
         classify_info = root.createElement('classifyInfo')
 
-        class_eng = root.createElement('classEng')
+        class_eng = root.createElement('en')
         class_eng.appendChild(root.createTextNode(row.loc['eventClassEng'].replace('、',',')))
-        class_chi = root.createElement('classChi')
+        class_chi = root.createElement('cn')
         class_chi.appendChild(root.createTextNode(row.loc['eventClassChi'].replace('、',',')))
 
         classify_info.appendChild(class_eng)
