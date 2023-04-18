@@ -76,7 +76,7 @@ def create_xml(dfs: Dict[Any,pd.DataFrame]):
 
 def main():
     st.title("Knowledge converter")
-    uploaded_file = st.file_uploader("", type="xlsx")
+    uploaded_file = st.file_uploader(" ", type="xlsx")
     if uploaded_file is not None:
         dfs = pd.read_excel(uploaded_file, sheet_name=None)
         if 'knowledgeType' in list(dfs.values())[0].columns:
