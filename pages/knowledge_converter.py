@@ -8,7 +8,7 @@ from xml.dom import minidom
 def create_property_info_node(root, row):
     def create_node(name,value):
         n = root.createElement(name)
-        n.appendChild(root.createTextNode(str(value).replace('\n','').replace('\r\n','')))
+        n.appendChild(root.createTextNode(str(value).replace('\n','').replace('\r\n','').replace('、',',').replace(' ','')))
         return n
 
     property_info = root.createElement('propertyInfo')
