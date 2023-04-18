@@ -75,7 +75,7 @@ def create_xml(dfs: Dict[Any,pd.DataFrame]):
     return xml_str
 
 def main():
-    st.title("Excel转XML")
+    st.title("Knowledge converter")
     uploaded_file = st.file_uploader("上传Excel文件", type="xlsx")
     if uploaded_file is not None:
         dfs = pd.read_excel(uploaded_file, sheet_name=None)
