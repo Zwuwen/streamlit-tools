@@ -30,8 +30,8 @@ def transform_text(text, transformation):
 
         df = pd.read_csv(StringIO(format_str), sep='\s+').reset_index(drop=True) / 1024
         buffer_and_cached = df['buffers'] + df['cached']
-        df['used-b_c'] = df['used'] - buffer_and_cached
-        df['free+b_c'] = df['free'] + buffer_and_cached
+        df['used-buff/cache'] = df['used'] - buffer_and_cached
+        df['free+buff/cache'] = df['free'] + buffer_and_cached
 
         fig = px.line(df, labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
         st.plotly_chart(fig)
