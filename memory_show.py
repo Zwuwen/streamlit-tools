@@ -33,7 +33,7 @@ def transform_text(text, transformation):
         df['used-buff/cache'] = df['used'] - buffer_and_cached
         df['free+buff/cache'] = df['free'] + buffer_and_cached
 
-        fig = px.line(df, labels={'index': 'time(min)', 'value': 'memory usage(MB)'})
+        fig = px.line(df, labels={'index': 'time(min)', 'value': 'memory usage(MB)'},symbol=['circle-open', 'circle-open', 'circle-open', 'circle-open', 'circle-open'])
         st.plotly_chart(fig)
     def _transform_system(txt):
         text_list =txt.decode('utf-8').splitlines()
