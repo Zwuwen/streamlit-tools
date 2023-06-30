@@ -16,6 +16,7 @@ jobs:
      
           script: |
             cd /home/zxf/workstation/web/github/streamlit/streamlit-tools
+            git reset --hard
             git pull
             chmod +x ./scripts/deploy.sh
             ./scripts/deploy.sh
