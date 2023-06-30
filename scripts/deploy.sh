@@ -9,7 +9,5 @@ if [ -n "${pid}" ]; then
 else
     echo "streamlit is not running"
 fi
-
-sleep 1
 nohup streamlit run memory_show.py >/dev/null 2>&1 &
 echo "Restarted streamlit !"

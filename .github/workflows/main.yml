@@ -19,5 +19,5 @@ jobs:
             git reset --hard
             git pull
             chmod +x ./scripts/deploy.sh
-            ./scripts/deploy.sh
-            echo 'Deployment successful to digital ocean' 
+            bash ./scripts/deploy.sh
+            echo 'Deployment successful to digital ocean'
