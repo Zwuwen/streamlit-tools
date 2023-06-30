@@ -10,4 +10,4 @@ else
     echo "streamlit is not running"
 fi
 nohup streamlit run memory_show.py >/dev/null 2>&1 &
-echo "Restarted streamlit"
+echo "Restarted streamlit !"
