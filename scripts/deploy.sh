@@ -3,7 +3,7 @@
 cd /home/zxf/workstation/web/github/streamlit/streamlit-tools
 source env/bin/activate
 pid=$(ps -aux | grep streamlit | grep -v grep | awk '{print $2}')
-if pid; then
+if test -n ${pid}; then
     echo "streamlit is running, pid is ${pid}"
     kill -9 "${pid}"
 else
