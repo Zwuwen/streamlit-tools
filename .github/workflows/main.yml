@@ -15,7 +15,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
      
           script: |
-            mkdir test 
-            cd test 
-            git clone git@github.com:Zwuwen/streamlit-tools.git 
+            cd /home/zxf/workstation/web/github/streamlit/streamlit-tools
+            git pull
+            chmod +x ./scripts/deploy.sh
+            ./scripts/deploy.sh
             echo 'Deployment successful to digital ocean' 
