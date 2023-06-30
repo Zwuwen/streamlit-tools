@@ -13,11 +13,4 @@ jobs:
           host: ${{secrets.SSH_HOST}} # IP address of the server you wish to ssh into
           key: ${{secrets.SSH_KEY}} # Private or public key of the server
           username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
-     
-          script: |
-            cd /home/zxf/workstation/web/github/streamlit/streamlit-tools
-            git reset --hard
-            git pull
-            chmod +x ./scripts/deploy.sh
-            bash ./scripts/deploy.sh
-            echo 'Deployment successful to digital ocean'
+          script-file: ./scripts/deploy.sh
