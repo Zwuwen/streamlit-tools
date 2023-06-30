@@ -1,8 +1,5 @@
 #!/bin/bash
 # 重启streamlit
-cd /home/zxf/workstation/web/github/streamlit/streamlit-tools
-git reset --hard
-git pull
 source env/bin/activate
 pid=$(ps -aux | grep streamlit | grep -v grep | awk '{print $2}')
 if [ -n "${pid}" ]; then
